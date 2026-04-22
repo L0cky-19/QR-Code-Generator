@@ -26,8 +26,8 @@ Interface cyberpunk/terminal pour générer, personnaliser et exporter des QR co
 Aucune build step, aucun serveur requis. Ouvre simplement `index.html` :
 
 ```bash
-git clone https://github.com/<ton-user>/qr-generator.git
-cd qr-generator
+git clone https://github.com/L0cky-19/QR-Code-Generator.git
+cd QR-Code-Generator
 # Ouvre index.html dans un navigateur
 # ou lance un petit serveur local :
 python3 -m http.server 8080
@@ -35,11 +35,6 @@ python3 -m http.server 8080
 
 Puis visite `http://localhost:8080`.
 
-## Déploiement sur GitHub Pages
-
-1. Push ce dépôt sur GitHub
-2. `Settings` → `Pages` → Branch : `main` / root `/`
-3. Le site sera disponible sur `https://<ton-user>.github.io/qr-generator/`
 
 ## Structure
 
