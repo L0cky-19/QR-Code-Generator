@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Générateur de QR codes 100% côté client. Aucune donnée envoyée à un serveur.">
+  <meta name="theme-color" content="#0a0e0a">
+  <title>QR//GEN — Générateur de QR codes</title>
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+        <div class="brand-text">QR<span class="slash">//</span>GEN</div>
+      </div>
+      <div class="status">
+        <span class="dot" aria-hidden="true"></span>
+        <span>System online</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-tag">v1.0 / local-only / zero tracking</div>
+      <h1>Génère. Encode. <span class="hl">Partage.</span></h1>
+      <p>
+        Outil de génération de QR codes tournant entièrement dans ton navigateur.
+        Aucune donnée ne quitte ta machine. Personnalisable, téléchargeable, rapide.
+      </p>
+    </section>
+
+    <div class="workspace">
+      <!-- INPUT PANEL -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>&gt; INPUT.cfg</span>
+          <span class="badge">[edit]</span>
+        </div>
+        <div class="panel-body">
+          <div class="field">
+            <label for="text">Contenu à encoder</label>
+            <textarea id="text" placeholder="URL, texte, email, wifi…">https://github.com</textarea>
+            <div class="presets" role="group" aria-label="Modèles rapides">
+              <button type="button" class="preset" data-preset="url">URL</button>
+              <button type="button" class="preset" data-preset="email">MAILTO</button>
+              <button type="button" class="preset" data-preset="tel">TEL</button>
+              <button type="button" class="preset" data-preset="wifi">WIFI</button>
+              <button type="button" class="preset" data-preset="sms">SMS</button>
+              <button type="button" class="preset" data-preset="geo">GEO</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="size">Taille (px)</label>
+            <input type="range" id="size" min="128" max="768" step="16" value="320">
+            <div class="slider-value">
+              <span>128</span>
+              <span id="sizeVal">320 × 320</span>
+              <span>768</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="ecl">Niveau de correction</label>
+            <select id="ecl">
+              <option value="L">L — Low (7%)</option>
+              <option value="M" selected>M — Medium (15%)</option>
+              <option value="Q">Q — Quartile (25%)</option>
+              <option value="H">H — High (30%)</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="fg">Avant-plan</label>
+              <div class="color-group">
+                <div class="color-swatch" style="background:#000000">
+                  <input type="color" id="fg" value="#000000">
+                </div>
+                <div class="color-label">HEX <span class="color-hex" id="fgHex">#000000</span></div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="bg">Arrière-plan</label>
+              <div class="color-group">
+                <div class="color-swatch" style="background:#ffffff">
+                  <input type="color" id="bg" value="#ffffff">
+                </div>
+                <div class="color-label">HEX <span class="color-hex" id="bgHex">#FFFFFF</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OUTPUT PANEL -->
+      <div class="panel panel-output">
+        <div class="panel-header">
+          <span>&gt; OUTPUT.stream</span>
+          <span class="badge cursor" id="liveStatus">live</span>
+        </div>
+        <div class="panel-body panel-body-output">
+          <div class="preview-wrap">
+            <div class="qr-stage">
+              <div id="qrcode"></div>
+            </div>
+            <div class="preview-meta">
+              <div>FMT <b id="metaFmt">PNG</b></div>
+              <div>SIZE <b id="metaSize">320px</b></div>
+              <div>ECL <b id="metaEcl">M</b></div>
+              <div>LEN <b id="metaLen">18</b></div>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="button" id="downloadPng" class="primary">
+              Download PNG <span class="arrow">→</span>
+            </button>
+            <button type="button" id="downloadSvg">
+              SVG <span class="arrow">→</span>
+            </button>
+            <button type="button" id="copyImg">
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>// 100% client-side · no server roundtrip</span>
+      <span class="credit">
+        Développé par
+        <a href="https://www.linkedin.com/in/lucas-garcia-203706330/" target="_blank" rel="noopener noreferrer">Lucas GARCIA</a>
+      </span>
+      <span id="clock">00:00:00</span>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
